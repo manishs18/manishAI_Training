@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-ai-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: python-ai-app
+
+  template:
+    metadata:
+      labels:
+        app: python-ai-app
+
+    spec:
+      containers:
+      - name: python-ai-app
+        image: python-ai-app:v1
+        imagePullPolicy: IfNotPresent
+
+        ports:
+        - containerPort: 5000
