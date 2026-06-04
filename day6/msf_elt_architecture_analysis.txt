@@ -1,0 +1,26 @@
+Based on the explicit architectural requirements and constraints provided across your images, the ideal choice for Médecins Sans Frontières (MSF) is an ELT (Extract, Load, Transform) data pipeline.
+Evaluating the specific dimensions from your case study against the ETL vs. ELT matrix makes it clear why ELT fits perfectly here:
+1. Where Transformation Happens & Analytics Requirements
+MSF Constraint: Geneva analysts need to run ad-hoc queries for evolving crises (outbreak trends, drug forecasting), meaning they do not have a fixed reporting schema yet.
+The ELT Choice: Traditional ETL forces you to define a rigid, fixed schema before loading the data. If a new crisis requires a new metric, you have to rewrite the entire pipeline logic. With ELT, you load the raw data into BigQuery first. When analytics requirements change, analysts can simply rewrite SQL/dbt models inside BigQuery without re-ingesting anything.
+2. Raw Data Preserved & Data Format
+MSF Constraint: Each of the 400 field sites uses a slightly different form version, varying column names, and different local languages. Raw CSVs are not directly queryable without normalization.
+The ELT Choice: In an ETL model, trying to map 400 mutating variations in-flight before it hits the database is a maintenance nightmare. By using ELT, you preserve the raw, un-normalized layer inside BigQuery staging tables. This ensures no data is lost or discarded during an imperfect in-flight transformation, allowing you to replay or adjust your normalization SQL schemas whenever a field site modifies their local CSV template.
+3. Latency Profile & Infrastructure
+MSF Constraint: Intermittent connectivity means data arrives in daily batch CSV dumps. Outbreak alerts tolerate a 24-hour lag, and inventory forecasting runs weekly—meaning there is zero requirement for sub-minute freshness.
+The ELT Choice: ETL tools (like Apache Flink) excel at real-time, stream processing where data must be decoded in sub-seconds. Because MSF is dealing with strictly offline, daily batch uploads, an asynchronous ELT batch architecture utilizing Google Cloud Storage (GCS) as a landing zone and BigQuery for processing is vastly simpler and more cost-effective.
+4. Patient Data Sensitivity (Anonymization)
+MSF Constraint: Patient records contain highly sensitive details (names, diagnoses, GPS coordinates) that must be fully anonymized before entering the central analytics platform.
+The ELT Choice: While ETL can mask data in transit, ELT inside Google Cloud allows you to land data securely into a restricted BigQuery staging dataset. From there, you can easily use BigQuery’s native security functions (like Cloud Data Loss Prevention (DLP), policy tags, or dynamic data masking) to robustly clean and anonymize the records before generating the sanitized, analytics-ready tables for the Geneva headquarters.
+
+
+[400 Field Sites (Daily CSVs)] 
+              │
+              ▼ (Batch Upload when connected)
+   [Google Cloud Storage (GCS)]  <--- Secure Raw Layer
+              │
+              ▼ (Direct Load via BigQuery Data Transfer)
+    [BigQuery Staging Tables]    <--- Complete Raw Data Preserved
+              │
+              ▼ (Transformation via SQL/dbt & Anonymization)
+  [BigQuery Final Analytics Hub] <--- Flexible
