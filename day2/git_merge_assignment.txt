@@ -1,0 +1,45 @@
+```txt
+Git Merge Process
+
+1. Check current branch
+   git branch
+
+2. Switch to the target branch (the branch that will receive changes)
+   git checkout main
+
+3. Pull the latest changes
+   git pull origin main
+
+4. Merge the source branch into the target branch
+   git merge feature-branch
+
+5. If there are merge conflicts:
+   - Open the conflicted files
+   - Resolve conflicts manually
+   - Mark files as resolved:
+     git add <file-name>
+
+6. Complete the merge (if required)
+   git commit
+
+7. Push the merged changes to the remote repository
+   git push origin main
+
+Example:
+
+   git checkout main
+   git pull origin main
+   git merge feature/login-page
+   git push origin main
+
+Useful Commands:
+
+View merge history:
+   git log --oneline --graph --all
+
+Abort an ongoing merge:
+   git merge --abort
+
+Preview changes before merge:
+   git diff main feature-branch
+```
