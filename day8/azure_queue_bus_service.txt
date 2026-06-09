@@ -1,0 +1,178 @@
+In Azure, Queue and Bus services are typically implemented using Azure Queue Storage and Azure Service Bus. They serve different architectural patterns and integration needs.
+
+1. Azure Queue Storage Architecture
+
+Use when you need simple, highly scalable message storage between components.
+
+Application A
+      |
+      v
+Azure Queue Storage
+      |
+      v
+Application B
+Characteristics
+Simple point-to-point messaging.
+Messages are stored in an Azure Storage account.
+Very low cost.
+Supports large volumes of messages.
+Basic delivery guarantees.
+No topics, subscriptions, or advanced routing.
+Common Integration Pattern
+Web App
+   |
+   v
+Azure Queue Storage
+   |
+   v
+Azure Function / Worker Role
+   |
+   v
+Database
+Typical Use Cases
+Background job processing.
+Image/video processing pipelines.
+Decoupling web applications from long-running tasks.
+2. Azure Service Bus Queue Architecture
+
+Use when enterprise-grade messaging features are required.
+
+Producer
+    |
+    v
+Service Bus Queue
+    |
+    v
+Consumer
+Characteristics
+Guaranteed delivery.
+Message locking.
+Duplicate detection.
+Dead-letter queues.
+Transactions.
+FIFO support through sessions.
+Common Integration Pattern
+Order API
+    |
+    v
+Service Bus Queue
+    |
+    v
+Order Processor
+    |
+    v
+ERP System
+Typical Use Cases
+Financial systems.
+Order processing.
+Enterprise application integration.
+Reliable asynchronous workflows.
+3. Azure Service Bus Topics & Subscriptions (Pub/Sub)
+
+When multiple consumers need the same message.
+
+                  +--> Subscription A --> Consumer A
+Producer
+    |
+    v
+Service Bus Topic
+    |
+                  +--> Subscription B --> Consumer B
+    |
+                  +--> Subscription C --> Consumer C
+Characteristics
+Publish/Subscribe model.
+One message can be delivered to multiple subscribers.
+Rule-based filtering.
+Independent subscribers.
+Example
+Order Created Event
+        |
+        v
+Service Bus Topic
+    |         |         |
+    v         v         v
+Billing   Inventory   Shipping
+4. Event-Driven Integration Architecture
+
+Combining Service Bus with Azure Functions.
+
+Application
+      |
+      v
+Service Bus Topic
+      |
+      v
+Azure Function
+      |
+      +--> SQL Database
+      |
+      +--> REST API
+      |
+      +--> Storage Account
+
+Benefits:
+
+Serverless processing.
+Automatic scaling.
+Event-driven workflows.
+5. Enterprise Integration Architecture
+SAP
+  |
+  v
+Logic Apps
+  |
+  v
+Service Bus Topic
+  |
+  +--> CRM System
+  |
+  +--> Billing System
+  |
+  +--> Analytics Platform
+
+Components often used:
+
+Microsoft Azure Service Bus
+Azure Logic Apps
+Azure Functions
+Azure API Management
+Azure Event Grid
+Queue vs Service Bus Comparison
+Feature	Azure Queue Storage	Azure Service Bus
+Cost	Lower	Higher
+Throughput	Very High	High
+FIFO	Limited	Yes (Sessions)
+Pub/Sub	No	Yes (Topics)
+Dead Letter Queue	Basic	Advanced
+Transactions	No	Yes
+Duplicate Detection	No	Yes
+Message Ordering	Limited	Strong
+Enterprise Integration	Basic	Excellent
+Recommended Architecture Selection
+Choose Azure Queue Storage when:
+Simple producer-consumer pattern.
+Cost optimization is important.
+Massive message volumes.
+Basic background processing.
+Choose Azure Service Bus when:
+Multiple subscribers need the same event.
+Guaranteed delivery is critical.
+Enterprise systems are integrated.
+Ordering, transactions, and dead-letter handling are required.
+
+A common modern Azure architecture is:
+
+Microservices
+      |
+      v
+Service Bus Topics
+      |
+      v
+Azure Functions
+      |
+      +--> Databases
+      +--> External APIs
+      +--> Analytics
+
+This provides loose coupling, scalability, and reliable event-driven integration.

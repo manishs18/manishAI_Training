@@ -1,0 +1,177 @@
+Can you explore if we can do multi-site hosting using Azure Load Balancers and App Gateways
+
+Yes, but the design depends on what you mean by multi-site hosting.
+
+Short Answer
+Azure Application Gateway: Yes, it natively supports multi-site hosting using host-based routing (e.g., site1.com, site2.com, api.site3.com) and is usually the preferred solution.
+Azure Load Balancer: Not by itself for HTTP/HTTPS multi-site hosting. It operates at Layer 4 (TCP/UDP) and does not inspect host headers, so it cannot route requests based on domain names.
+Option 1: Multi-Site Hosting with Azure Application Gateway (Recommended)
+
+Application Gateway supports multi-site listeners.
+
+Architecture
+Internet
+    |
+    v
+Application Gateway
+    |
+    +--> site1.com --> App Service / VMSS / AKS
+    |
+    +--> site2.com --> App Service / VMSS / AKS
+    |
+    +--> api.site3.com --> API Backend
+Example Routing
+Host Header	Backend Pool
+site1.com	Web App 1
+site2.com	Web App 2
+api.site3.com	API Cluster
+Benefits
+Single public IP.
+Multiple SSL certificates.
+WAF support.
+Path-based routing.
+Host-based routing.
+SSL offloading.
+
+Typical use case:
+
+www.company.com
+portal.company.com
+api.company.com
+admin.company.com
+
+All can be served from one Application Gateway.
+
+More information: Azure Application Gateway documentation
+
+Option 2: Azure Load Balancer Only
+
+Azure Load Balancer works at the network layer.
+
+Architecture
+Internet
+    |
+    v
+Azure Load Balancer
+    |
+    +--> VM1
+    +--> VM2
+    +--> VM3
+Limitation
+
+If both domains point to the same public IP:
+
+site1.com
+site2.com
+
+Load Balancer sees only:
+
+TCP 443
+
+It does not know which hostname was requested.
+
+Therefore:
+
+❌ No host-based routing.
+
+You would need:
+
+Separate frontend IPs, or
+A reverse proxy on backend VMs (Nginx/IIS/Apache).
+Option 3: Load Balancer + Reverse Proxy
+Architecture
+Internet
+    |
+    v
+Azure Load Balancer
+    |
+    v
+Nginx Cluster
+    |
+    +--> site1 backend
+    +--> site2 backend
+    +--> site3 backend
+
+Nginx performs:
+
+server_name site1.com;
+server_name site2.com;
+
+This works but introduces additional management overhead.
+
+Option 4: Application Gateway + Load Balancer (Enterprise Pattern)
+
+For large-scale environments:
+
+Internet
+    |
+    v
+Application Gateway (WAF)
+    |
+    v
+Internal Load Balancer
+    |
+    +--> Web Farm A
+    +--> Web Farm B
+    +--> AKS Cluster
+
+Responsibilities:
+
+Component	Responsibility
+Application Gateway	SSL termination, WAF, hostname routing
+Internal Load Balancer	Backend distribution
+Backend Services	Application hosting
+
+This is a common enterprise architecture.
+
+Option 5: Global Multi-Site Hosting
+
+For applications deployed across regions:
+
+Users
+   |
+   v
+Azure Front Door
+   |
+   +--> East US Application Gateway
+   |
+   +--> West Europe Application Gateway
+   |
+   +--> Southeast Asia Application Gateway
+
+Benefits:
+
+Global routing.
+CDN capabilities.
+Failover.
+Latency-based routing.
+Multi-site support.
+
+More information: Azure Front Door documentation
+
+Recommendation
+
+For hosting multiple websites/domains on Azure:
+
+Small to Medium Deployments
+Internet
+    |
+Application Gateway
+    |
+Multiple Websites
+Enterprise Deployments
+Internet
+    |
+Azure Front Door
+    |
+Application Gateway
+    |
+Backend Services
+Avoid
+Internet
+    |
+Azure Load Balancer
+    |
+Multiple Websites
+
+unless you're also running a reverse proxy layer, because Azure Load Balancer alone cannot perform domain-based (multi-site) routing.

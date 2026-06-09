@@ -1,7 +1,8 @@
-EY Application Model Type Primary Metric Why This Metric?
-Anomaly detection in invoices Unsupervised learning (e.g., Isolation Forest, Autoencoder) Precision@K / Recall Focus is on catching rare anomalies; high precision reduces false alarms, recall ensures important fraud is not missed.
-Spam classification in audit emails Supervised classification (e.g., Logistic Regression, BERT) F1 Score Balances precision (avoiding false spam flags) and recall (catching actual spam).
-Predicting deal close probability Supervised learning (binary classification / regression) ROC-AUC Evaluates ranking ability across thresholds, useful for probabilistic predictions.
-Summarising 100-page contracts Generative AI / NLP (LLMs, Transformer summarization models) ROUGE / Human evaluation Measures quality of summarization vs. reference; human evaluation ensures coherence and accuracy.
-Translating audit reports Neural Machine Translation (seq2seq Transformer models) BLEU Score Standard metric for translation quality comparing output to reference translation.
-Flagging revenue forecasting errors Time-series anomaly detection or regression models Mean Absolute Error (MAE) / RMSE Measures prediction error magnitude; key for financial accuracy assessment.
+| EY Application                      | Model Type                                | Primary Metric            | Why This Metric?                                                                                               |
+| ----------------------------------- | ----------------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Anomaly detection in invoices       | Anomaly Detection / Unsupervised Learning | Precision (or F1-Score)   | False positives create unnecessary investigations, so detected anomalies should be highly accurate.            |
+| Spam classification in audit emails | Classification (Binary Classification)    | F1-Score                  | Balances Precision and Recall, ensuring spam is caught while minimizing legitimate email misclassification.    |
+| Predicting deal close probability   | Classification (Probability Prediction)   | AUC-ROC                   | Measures how well the model distinguishes deals that will close versus those that won't across all thresholds. |
+| Summarising 100-page contracts      | Generative AI / NLP Summarization         | ROUGE Score               | Compares generated summaries against reference summaries and measures content coverage.                        |
+| Translating audit reports           | Machine Translation (NLP)                 | BLEU Score                | Evaluates translation quality by comparing generated text with human-translated references.                    |
+| Flagging revenue forecasting errors | Regression / Anomaly Detection            | Mean Absolute Error (MAE) | Measures the average forecasting error in business-friendly units and is easy to interpret.                    |
