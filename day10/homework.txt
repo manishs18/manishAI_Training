@@ -1,0 +1,61 @@
+Difference Between LLM and MLM
+Aspect	LLM (Large Language Model)	MLM (Masked Language Model)
+Full Form	Large Language Model	Masked Language Model
+Purpose	Generate, understand, summarize, translate, answer questions	Predict missing words in a sentence
+Training Method	Predicts the next token/word in sequence	Predicts masked words within a sentence
+Direction	Typically left-to-right (autoregressive)	Bidirectional (looks at both left and right context)
+Example Models	GPT-4, Llama, Claude	BERT, RoBERTa
+Main Use Cases	Chatbots, content generation, coding assistants, summarization	Text classification, sentiment analysis, search, NER
+Text Generation	Excellent	Not designed for generating long text
+MLM Example
+
+Input:
+
+The capital of France is [MASK].
+
+MLM predicts:
+
+Paris
+
+The model uses both sides of the sentence:
+
+The capital of France is ___.
+
+to determine the missing word.
+
+LLM Example
+
+Input:
+
+The capital of France is
+
+LLM predicts:
+
+Paris.
+
+Then continues:
+
+Paris. It is known for the Eiffel Tower...
+
+It generates text one token at a time.
+
+Key Difference
+
+MLM fills in blanks.
+
+I love [MASK] learning.
+
+↓
+
+machine
+
+LLM generates text continuously.
+
+I love
+
+↓
+
+I love machine learning because it enables computers to learn from data...
+Simple Analogy
+MLM (BERT): Like solving a fill-in-the-blanks exam.
+LLM (GPT): Like writing an essay one word at a time.
