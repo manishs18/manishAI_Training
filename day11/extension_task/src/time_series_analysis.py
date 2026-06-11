@@ -50,7 +50,7 @@ def decompose_series(df,
     plt.savefig(
         os.path.join(
             output_dir,
-            "../plots/decomposition.png"
+            "decomposition.png"
         )
     )
 
