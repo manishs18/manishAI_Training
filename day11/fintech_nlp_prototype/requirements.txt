@@ -1,0 +1,6 @@
+langchain
+openai
+promptlayer
+faiss-cpu
+pandas
+rouge-score

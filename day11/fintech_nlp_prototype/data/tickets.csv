@@ -1,0 +1,4 @@
+ticket,ground_truth
+"Refund not processed after 10 days",Refund
+"App crashes on login",Tech
+"Wrong billing charge applied",Billing
