@@ -1,34 +1,54 @@
-from langchain.prompts import PromptTemplate
-from langchain.llms import OpenAI
-import json
+from groq_utils import chat_completion, extract_json
 
-llm = OpenAI(temperature=0)
 
-classifier_prompt = PromptTemplate(
-    input_variables=["ticket"],
-    template="""
-You are a support ticket classifier.
+def _rule_based_classification(ticket):
+    lowered = ticket.lower()
+    category = "General"
+    reasoning = "No strong signal matched, so the ticket was routed to the general queue."
+    confidence = 2
 
-Step-by-step reasoning:
-1. Identify the issue type
-2. Check urgency or risk
-3. Map to category
+    if any(keyword in lowered for keyword in ["refund", "chargeback", "money back"]):
+        category = "Refund"
+        reasoning = "The ticket mentions a refund-related issue."
+        confidence = 5
+    elif any(keyword in lowered for keyword in ["bill", "billing", "charge", "invoice"]):
+        category = "Billing"
+        reasoning = "The ticket references billing or payment charges."
+        confidence = 5
+    elif any(keyword in lowered for keyword in ["crash", "login", "error", "bug", "issue", "down", "failed"]):
+        category = "Tech"
+        reasoning = "The ticket describes a technical problem affecting usage."
+        confidence = 5
+    elif any(keyword in lowered for keyword in ["urgent", "asap", "immediately", "escalate", "critical"]):
+        category = "Escalate"
+        reasoning = "The ticket indicates urgency or escalation risk."
+        confidence = 5
 
-Return JSON with:
-- category
-- reasoning
-- confidence (1-5)
-- sla_hours
+    return {
+        "category": category,
+        "reasoning": reasoning,
+        "confidence": confidence,
+        "sla_hours": assign_sla(category),
+    }
+
+def classify_ticket(ticket):
+    try:
+        raw = chat_completion(
+            prompt=f"""
+Return valid JSON with keys: category, reasoning, confidence, sla_hours.
 
 Ticket:
 {ticket}
-"""
-)
+""",
+            system="Classify support tickets into Billing, Refund, Tech, General, or Escalate.",
+        )
+        parsed = extract_json(raw)
+        parsed.setdefault("sla_hours", assign_sla(parsed.get("category", "General")))
+        return parsed
+    except Exception:
+        pass
 
-def classify_ticket(ticket):
-    prompt = classifier_prompt.format(ticket=ticket)
-    raw = llm(prompt)
-    return json.loads(raw)
+    return _rule_based_classification(ticket)
 
 def assign_sla(category):
-    return {"Billing": 24, "Refund": 48, "Tech": 12, "General": 72, "Escalate": 4}[category]
+    return {"Billing": 24, "Refund": 48, "Tech": 12, "General": 72, "Escalate": 4}.get(category, 72)

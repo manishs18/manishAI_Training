@@ -1,6 +1,4 @@
-langchain
-openai
-promptlayer
+groq
 faiss-cpu
 pandas
 rouge-score

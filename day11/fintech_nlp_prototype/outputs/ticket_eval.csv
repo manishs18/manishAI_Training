@@ -1,0 +1,4 @@
+ticket,ground_truth,pred_label,reasoning,confidence,sla_hours
+Refund not processed after 10 days,Refund,Refund,The ticket mentions a refund-related issue.,5,48
+App crashes on login,Tech,Tech,The ticket describes a technical problem affecting usage.,5,12
+Wrong billing charge applied,Billing,Billing,The ticket references billing or payment charges.,5,24

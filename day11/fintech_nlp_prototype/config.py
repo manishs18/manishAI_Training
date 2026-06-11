@@ -1,2 +1,5 @@
-OPENAI_API_KEY = "your_openai_api_key"
-PROMPTLAYER_API_KEY = "your_promptlayer_api_key"
+import os
+
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
