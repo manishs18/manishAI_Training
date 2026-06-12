@@ -1,0 +1,76 @@
+Difference Between Claude and ChatGPT Prompt Structure
+
+Both Claude and ChatGPT are advanced AI assistants, but they often respond best to slightly different prompt styles.
+
+ChatGPT generally performs well when prompts are organized into clear sections with specific instructions. A common structure is:
+
+Role: You are a marketing expert.
+
+Task: Create a social media campaign.
+
+Requirements:
+- Target college students
+- Budget under $5,000
+- Duration: 30 days
+
+Output Format:
+- Weekly activity table
+- Expected results
+
+This approach helps ChatGPT follow instructions accurately because the role, task, constraints, and output format are clearly separated.
+
+Claude, on the other hand, often works effectively with more natural and context-rich instructions. For example:
+
+You are helping a startup reach college students through social media.
+
+Create a 30-day campaign with a budget below $5,000. Focus on practical and cost-effective strategies. Explain the reasoning behind your recommendations and present the final plan in a weekly table.
+
+Claude tends to use the broader context provided in the prompt and may require less rigid formatting than ChatGPT.
+
+Key Differences
+Feature	ChatGPT	Claude
+Preferred Prompt Style	Structured and explicit	Natural and context-rich
+Instruction Following	Highly precise	Context-driven
+Formatting Requirements	Often benefits from clear sections	More flexible
+Long Context Handling	Strong	Very strong
+Best Practice	Role + Task + Constraints + Output Format	Context + Goal + Detailed Guidance
+Conclusion
+
+The main difference is that ChatGPT usually performs best with structured prompts, while Claude often excels with detailed, conversational instructions and rich context. However, both models can handle either style effectively when the prompt is clear and specific.
+
+give i cell with full desc
+
+Here’s a single-cell, full description version of your homework, concise enough to fit on one page but complete:
+
+Difference Between Claude and ChatGPT Prompt Structure
+
+Claude and ChatGPT are both advanced AI language models, but they respond best to slightly different prompt styles. ChatGPT performs well when prompts are structured with explicit sections such as role, task, requirements, and output format. For example, a prompt could be:
+
+Role: Marketing Expert
+Task: Create a social media campaign
+Requirements:
+- Target college students
+- Budget under $5,000
+- Duration: 30 days
+Output Format:
+- Weekly activity table
+- Expected results
+
+This format allows ChatGPT to follow instructions precisely, producing organized and predictable outputs.
+
+Claude, in contrast, handles prompts with natural language and rich context effectively. A similar prompt for Claude might be:
+
+You are helping a startup reach college students through social media. Create a 30-day campaign with a budget under $5,000. Focus on practical strategies and explain the reasoning behind each recommendation. Present the final plan in a weekly table.
+
+Claude excels when goals, context, and reasoning expectations are clearly described, and it is less dependent on rigid formatting.
+
+Key Differences
+
+Feature	ChatGPT	Claude
+Prompt Style	Structured, sectioned	Natural language, context-rich
+Instruction Following	Very precise	Context-driven
+Formatting Sensitivity	High	Moderate
+Long Context Handling	Strong	Very strong
+Best Practice	Role + Task + Constraints + Output	Context + Goal + Guidance
+
+Conclusion: ChatGPT works best with clearly structured prompts, while Claude is better with detailed, conversational instructions. Both can adapt, but tailoring prompt style to the model improves results.
