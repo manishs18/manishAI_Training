@@ -1,0 +1,7 @@
+Medication safety note: Clinicians should review the patient's current medications before starting any new treatment. If a suspected drug interaction is identified, they should verify the interaction in a trusted clinical reference, confirm the dosage, and monitor for adverse effects.
+
+Clinical protocol note: High-risk medications require a second review by a senior clinician or pharmacist. When a conflict is detected, the team should document the decision, choose an alternative therapy when possible, and update the patient record.
+
+Guideline note: For allergy-related concerns, clinicians should stop the suspected trigger, assess severity, and escalate to emergency care if symptoms suggest anaphylaxis. Follow local hospital policy before administering any substitute medication.
+
+Escalation note: If the clinical question is outside the knowledge base, the assistant should say that it cannot answer confidently and route the case to a qualified clinician or pharmacy team.

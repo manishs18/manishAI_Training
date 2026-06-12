@@ -1,9 +1,79 @@
-RAG architecture and flow ·
-Vector DBs: Pinecone, Weaviate, FAISS, Azure AI Search 
-· Indexing, retrieval & latency considerations
-· Using Claude in RAG pipelines 
-· Large context window vs retrieval 
+Day 12 - Colab 1: RAG Architecture and Flow
+
+Goal
+Build a retrieval-augmented generation pipeline and understand how indexing, retrieval, and generation work together.
+
+Architecture Diagram
+```mermaid
+flowchart LR
+	A[Source Corpus] --> B[Chunking]
+	B --> C[Embeddings]
+	C --> D[Vector Store / Search Index]
+	D --> E[Retrieve Top K Context]
+	E --> F[Claude / LLM]
+	F --> G[Answer with Sources]
+	E --> H[Latency and Quality Checks]
+```
+
+What This Notebook Teaches
+· How documents move from raw text to searchable chunks
+· How embeddings represent meaning in vector space
+· How a vector database or search index retrieves relevant context
+· How Claude uses retrieved context to answer questions
+· Why RAG is often faster and cheaper than full-context prompting
+
+Topics Covered
+· RAG architecture and flow
+· Vector databases: Pinecone, Weaviate, FAISS, Azure AI Search
+· Indexing, retrieval, and latency considerations
+· Using Claude in RAG pipelines
+· Large context window vs retrieval
 · Hybrid RAG + long-context approach
 
-Build a RAG pipeline using LangChain + Azure AI Search · Test retrieval vs full-context prompting with Claude
+Step-by-Step Workflow
+1. Start with a source corpus, such as articles, guidelines, or internal notes.
+2. Break the source text into smaller chunks so each piece can be embedded.
+3. Convert each chunk into an embedding vector.
+4. Store the vectors in a search system or vector database.
+5. Receive a user question and convert the question into the same vector space.
+6. Retrieve the most relevant chunks.
+7. Pass those chunks to Claude with the question.
+8. Compare the answer quality, cost, and latency against a full-context approach.
+
+Code Walkthrough
+1. Install the notebook dependencies.
+	- This prepares the Python environment with LangChain, vector search, plotting, and Claude-related packages.
+2. Set API keys and service settings.
+	- Add the model and search credentials needed to connect to external services.
+3. Prepare the corpus.
+	- Load the sample data and inspect the source material before chunking.
+4. Chunk the documents.
+	- Split long passages into smaller sections that are easier to search and embed.
+5. Create embeddings.
+	- Transform each chunk into a numerical vector that captures meaning.
+6. Build the vector index.
+	- Store the vectors so similar text can be found efficiently.
+7. Run retrieval for sample questions.
+	- Test whether the right chunks are returned for a query.
+8. Generate answers with Claude.
+	- Feed the retrieved chunks into the model and produce the final response.
+9. Compare latency and cost.
+	- Observe how much time and token usage each stage requires.
+
+Architecture View
+The pipeline starts with a document source, splits it into chunks, converts those chunks into embeddings, stores them in a vector index, retrieves the best matches for each user question, and sends the retrieved evidence to the model for the final answer.
+
+How to Run
+1. Open the Colab notebook for Day 12 Colab 1.
+2. Run the dependency installation cell first.
+3. Add your API keys and service settings.
+4. Execute the notebook from top to bottom.
+5. Check each intermediate output before moving to the next step.
+6. Make sure the index or vector store is ready before running query cells.
+7. Review the retrieved passages and final answers.
+
+Expected Outcome
+· A working RAG pipeline using LangChain and Azure AI Search or another vector store.
+· Retrieval results that can be compared with full-context prompting.
+· A clear understanding of how document chunking, embeddings, and retrieval work together.
 

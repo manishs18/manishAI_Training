@@ -1,0 +1,95 @@
+Day 12 Self Project - Clinical RAG Assistant
+
+Project Goal
+Build a self-contained clinical RAG project for a hospital assistant that can answer questions from clinical guidelines, drug interactions, and internal protocols.
+
+Architecture Diagram
+```mermaid
+flowchart LR
+	A[Clinical Notes / Policies] --> B[Chunking]
+	B --> C[Retrieval Layer]
+	C --> D[Relevant Evidence]
+	D --> E[Answer Composer or LLM]
+	E --> F[Clinical Answer]
+	F --> G[Report + Evaluation]
+```
+
+Project Scenario
+A large hospital network needs an AI assistant for clinicians. The assistant must stay accurate, fast, and compliant while using a searchable clinical knowledge base.
+
+What You Need To Build
+1. A simple end-to-end RAG workflow.
+2. A retrieval layer that can search clinical content.
+3. A Claude-based answer generator or a simple answer composer for the starter project.
+4. A short report explaining the architecture and trade-offs.
+5. Clear instructions so another person can run the project.
+
+Project Requirements
+1. Describe the workflow from document ingestion to final answer generation.
+2. Explain how chunking, embeddings, retrieval, and Claude generation work together.
+3. Compare hybrid retrieval with full-context prompting.
+4. Include latency, cost, and accuracy considerations.
+5. Mention data residency, privacy, and compliance constraints where relevant.
+6. Show how the system handles a clinical question from start to finish.
+
+Suggested Project Structure
+1. `data/` for source documents or sample clinical text.
+2. `src/` for the ingestion, retrieval, and generation code.
+3. `notebooks/` for experimentation and testing.
+4. `outputs/` for charts, logs, and evaluation results.
+5. `README.md` for setup and run instructions.
+
+Starter Project
+1. Use `day12/healthbot_clinical_rag_task` as the base folder.
+2. Run the sample project in `src/app.py`.
+3. Read the code-wise guide in `README.md`.
+4. Replace the simple scoring logic with embeddings and Claude if you want to extend it.
+
+Build Steps
+1. Define the problem and the clinical knowledge source.
+2. Prepare the text data and split it into chunks.
+3. Create embeddings for the chunks.
+4. Store the vectors in a search layer or vector database.
+5. Implement retrieval for user questions.
+6. Generate final answers with Claude.
+7. Add a small evaluation section for accuracy and latency.
+8. Write the final explanation of what works and what could be improved.
+
+Code Understanding Guide
+1. Start with `src/app.py` to see how the whole flow runs.
+2. Open `src/retrieval.py` to understand chunking and scoring.
+3. Open `src/prompts.py` to see how retrieved evidence is turned into a response.
+4. Review `data/sample_clinical_notes.txt` to understand the input knowledge base.
+5. Run the project and inspect which chunks were selected for the sample question.
+
+Architecture View
+The project keeps the flow intentionally small: a document source is split into chunks, a retriever ranks the chunks for a question, and the answer layer explains the result using the top evidence. That makes it easy to understand before moving to a production stack.
+
+Deliverables
+1. A short architecture explanation.
+2. A step-by-step workflow.
+3. Clear run instructions.
+4. A summary of the trade-offs between RAG and full-context prompting.
+5. A short conclusion about where this project would fit in a real hospital setting.
+
+Suggested Output Format
+1. Title
+2. Problem statement
+3. Architecture
+4. Workflow
+5. Code or implementation steps
+6. How to run
+7. Results and key takeaways
+
+How To Present It
+1. Keep the explanation practical and simple.
+2. Show the flow from input document to answer.
+3. Use one example question and one example answer.
+4. Mention why RAG is preferable for a large, changing knowledge base.
+
+Evaluation Focus
+1. Correctness of the workflow.
+2. Clarity of the run steps.
+3. Understanding of RAG vs full-context trade-offs.
+4. Practical deployment considerations for a clinical environment.
+5. Quality of the self-project presentation.
